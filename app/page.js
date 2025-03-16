@@ -2,7 +2,7 @@ import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-w
 import AboutMe from "@/components/Aboutme";
 import TimelineSection from "@/components/TimelineSection";
 import { FloatingDockdemo } from "@/components/Floatingdock";
-import { LinkPreviewDemo } from "@/components/Techstack";
+
 
 
 
@@ -45,7 +45,7 @@ export default function Home() {
         id="link-previews"
         className="w-full flex flex-col items-center py-12"
       >
-        <LinkPreviewDemo />
+      
       </section>
     </div>
   );
