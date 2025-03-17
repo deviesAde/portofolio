@@ -7,6 +7,9 @@ import { FloatingDockdemo } from "@/components/Floatingdock";
 
 
 
+
+
+
 export default function Home() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
@@ -41,12 +44,25 @@ export default function Home() {
       >
         <TimelineSection />
       </section>
-      <section
-        id="link-previews"
-        className="w-full flex flex-col items-center py-12"
-      >
       
+      <section
+        id="certificates"
+        className="w-full py-12 border-t mt-12 flex flex-col items-center"
+      >
+        
+        <Certificate />
       </section>
+      <section id="projects" className="w-full py-12 border-t mt-12 flex flex-col items-center">
+        <div className="text-center">
+          <h2 className="text-xl md:text-2xl lg:text-4xl font-bold text-center text-black dark:text-white font-sans tracking-tight">
+            My Projects
+          </h2>
+          
+
+        </div>
+      </section>
+      
+      
     </div>
   );
 }

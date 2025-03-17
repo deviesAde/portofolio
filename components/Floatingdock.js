@@ -20,10 +20,10 @@ export function FloatingDockdemo() {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > lastScrollY.current) {
-        // Jika scroll ke bawah, sembunyikan floating dock
+       
         setIsVisible(false);
       } else {
-        // Jika scroll ke atas, tampilkan floating dock
+        
         setIsVisible(true);
       }
 
