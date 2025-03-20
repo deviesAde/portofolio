@@ -2,7 +2,8 @@ import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-w
 import AboutMe from "@/components/Aboutme";
 import TimelineSection from "@/components/TimelineSection";
 import { FloatingDockdemo } from "@/components/Floatingdock";
-
+import Certificate from "@/components/Certificate";
+import Project from "@/components/Project";
 
 
 
@@ -57,7 +58,7 @@ export default function Home() {
           <h2 className="text-xl md:text-2xl lg:text-4xl font-bold text-center text-black dark:text-white font-sans tracking-tight">
             My Projects
           </h2>
-          
+          <Project />
 
         </div>
       </section>
