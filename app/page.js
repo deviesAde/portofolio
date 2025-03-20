@@ -4,6 +4,7 @@ import TimelineSection from "@/components/TimelineSection";
 import { FloatingDockdemo } from "@/components/Floatingdock";
 import Certificate from "@/components/Certificate";
 import Project from "@/components/Project";
+import TrueFocus from "@/components/ui/Truefocus";
 
 
 
@@ -13,20 +14,17 @@ import Project from "@/components/Project";
 
 export default function Home() {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center">
-      <div className="text-center mb-2 mt-50">
-        <h2 className="text-xl relative z-20 md:text-2xl lg:text-4xl font-bold text-center text-black dark:text-white font-sans tracking-tight">
-          Welcome to My {""}
-          <div className="relative mx-auto inline-block w-max text-gray-700 dark:text-gray-300 [filter:drop-shadow(0px_1px_3px_rgba(27,_37,_80,_0.14))]">
-            <div className="absolute left-0 top-[1px] bg-clip-text bg-no-repeat text-transparent bg-gradient-to-r py-4 from-purple-500 via-violet-500 to-pink-500">
-              <span>Portfolio</span>
-            </div>
-            <div className="relative bg-clip-text text-transparent bg-no-repeat bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 py-4">
-              <span>Portfolio</span>
-            </div>
-          </div>
-        </h2>
-      </div>
+    <div className="w-full mt-12 mb-20px">
+      <TrueFocus
+        sentence="WELCOME TO MY PORTFOLIO"
+        manualMode={false}
+        blurAmount={5}
+        borderColor="purple"
+        glowColor="rgba(0, 255, 0, 0.6)"
+        animationDuration={0.5}
+        pauseBetweenAnimations={1}
+      />
+
       <div className="fixed top-0 left-0 w-full h-auto z-50 py-2 px-4">
         <FloatingDockdemo />
       </div>
@@ -45,25 +43,34 @@ export default function Home() {
       >
         <TimelineSection />
       </section>
-      
+
       <section
         id="certificates"
         className="w-full py-12 border-t mt-12 flex flex-col items-center"
       >
-        
         <Certificate />
       </section>
-      <section id="projects" className="w-full py-12 border-t mt-12 flex flex-col items-center">
+      <section
+        id="projects"
+        className="w-full py-12 border-t mt-12 flex flex-col items-center"
+      >
         <div className="text-center">
           <h2 className="text-xl md:text-2xl lg:text-4xl font-bold text-center text-black dark:text-white font-sans tracking-tight">
             My Projects
           </h2>
           <Project />
-
         </div>
       </section>
-      
-      
+      <section
+        id="contact"
+        className="w-full py-12 border-t mt-12 flex flex-col items-center"
+      >
+        <div className="text-center">
+          <h2 className="text-xl md:text-2xl lg:text-4xl font-bold text-center text-black dark:text-white font-sans tracking-tight">
+            More About me
+          </h2>
+        </div>
+      </section>
     </div>
   );
 }

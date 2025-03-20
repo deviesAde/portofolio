@@ -34,11 +34,11 @@ export default function Certificate() {
   return (
     <div className="flex flex-col items-center">
       <BlurText
-        text="Here are some of my certificates"
+        text="HERE ARE SOME OF MY CERTIFICATES"
         delay={150}
         animateBy="words"
         direction="top"
-        className="text-4xl font-bold text-center  mb-7"
+        className="text-lg font-bold text-center  mb-7"
       />
       <div className="flex flex-wrap justify-center gap-6">
         {certificates.map((cert, index) => (
@@ -47,7 +47,7 @@ export default function Certificate() {
             imageSrc={cert.imageSrc}
             altText={cert.altText}
             captionText={cert.captionText}
-            containerHeight="180px" // 16:9 Aspect Ratio
+            containerHeight="180px" 
             containerWidth="320px"
             imageHeight="180px"
             imageWidth="320px"
