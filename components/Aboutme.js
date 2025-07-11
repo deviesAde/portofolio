@@ -1,9 +1,9 @@
 "use client";
-
-import Image from "next/image";
-import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
-import Link from "next/link";
+import RotatingText from "./ui/rotating-text";
+import Lanyard from "./ui/lanyard";
 import BlurText from "@/components/ui/Blurtext";
+import SocialButton from "./ui/social-button";
+import Btn03 from "./ui/button03";
 
 export default function AboutMe() {
   const handleAnimationComplete = () => {
@@ -11,58 +11,54 @@ export default function AboutMe() {
   };
 
   return (
-    <div className="pt-16 sm:pt-10 p-4 max-w-2xl mx-auto flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-6 relative">   
-      {/* Bagian Teks */}
-      <div className="w-full md:w-1/2 flex flex-col items-center md:items-start flex-1 min-h-auto">
+    <div className="pt-16 sm:pt-20 px-4 max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-10 lg:gap-16 relative">
+      {/* Text Section */}
+      <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start">
+        {/* Title and RotatingText */}
+        <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center lg:justify-start gap-3 mb-10">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center lg:text-left">
+            I'M READY FOR
+          </h1>
+          <div className="mt-2 sm:mt-0">
+            <RotatingText
+              texts={["CODE", "DESIGN", "CREATE", "INNOVATE", "EXPLORE"]}
+              mainClassName="px-5 sm:px-6 md:px-7 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold text-3xl sm:text-4xl md:text-5xl py-3 sm:py-4 justify-center rounded-xl"
+              staggerFrom={"last"}
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-120%" }}
+              staggerDuration={0.025}
+              splitLevelClassName="overflow-hidden pb-1 sm:pb-1.5"
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              rotationInterval={2000}
+            />
+          </div>
+        </div>
+
+        {/* Description */}
         <BlurText
-          text="Hello, I'm Devies Ade Irawan. I am a student at the University of Jember with a deep passion for programming and technology. 💻🚀 I enjoy tackling coding challenges, solving problems, and developing innovative solutions through software development. With a strong curiosity, I am always eager to learn new programming languages, explore different frameworks, and stay updated with the latest tech trends.
-      For me, programming is not just about writing code—it’s about creativity, logic, and perseverance in building efficient and impactful systems. 🎯✨ I love participating in projects, competitions, and collaborations that allow me to grow and expand my knowledge in the tech world. With a strong learning spirit, I am committed to continuously improving my skills and making meaningful contributions to the field of technology. 🔥📚."
+          text="Saya Devies Ade Irawan, mahasiswa Universitas Jember yang antusias di bidang pemrograman dan teknologi. 💻 Saya senang memecahkan masalah, belajar hal baru, dan membangun solusi lewat software. Dengan semangat belajar tinggi, saya terus berkembang dan berkontribusi di dunia teknologi."
           delay={150}
           animateBy="words"
           direction="top"
           onAnimationComplete={handleAnimationComplete}
-          className="text-xs sm:text-sm md:text-base mb-6 text-center md:text-left max-w-full break-words"
+          className="text-base sm:text-lg md:text-xl mb-10 text-center lg:text-left w-full max-w-2xl leading-relaxed"
         />
+
+        {/* Buttons */}
+        <div className="w-full flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center lg:justify-start">
+          <div className="w-full sm:w-auto flex-1 max-w-xs">
+            <SocialButton className="w-full h-14 text-lg" />
+          </div>
+          <div className="w-full sm:w-auto flex-1 max-w-xs">
+            <Btn03 className="w-full h-14 text-lg" />
+          </div>
+        </div>
       </div>
-      {/* Bagian Kartu */}
-      <div className="w-full md:w-1/2 flex justify-center">
-        <CardContainer className="inter-var">
-          <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full max-w-xs sm:w-[18rem] h-auto rounded-xl p-6 border">
-            <CardItem
-              translateZ="50"
-              className="text-lg font-bold text-neutral-600 dark:text-white"
-            >
-              Devies Ade Irawan
-            </CardItem>
-            <CardItem
-              as="p"
-              translateZ="60"
-              className="text-neutral-500 text-sm max-w-full mt-2 dark:text-neutral-300 break-words"
-            >
-              Junior Developer
-            </CardItem>
-            <CardItem translateZ="100" className="w-full mt-4">
-              <Image
-                src="/images/devies.JPG"
-                height={800}
-                width={800}
-                className="h-auto max-h-60 md:max-h-80 w-full object-cover rounded-xl group-hover/card:shadow-xl"
-                alt="Devies Ade Irawan"
-              />
-            </CardItem>
-            <div className="flex justify-center mt-6">
-              <CardItem
-                translateZ={20}
-                as={Link}
-                href="https://www.linkedin.com/in/deviesade/"
-                target="__blank"
-                className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white bg-blue-600 text-white hover:bg-blue-700 transition"
-              >
-                Let's Connect on LinkedIn
-              </CardItem>
-            </div>
-          </CardBody>
-        </CardContainer>
+
+      {/* Lanyard Section */}
+      <div className="w-full lg:w-1/2 h-auto lg:h-[550px] flex justify-center items-center mt-10 lg:mt-0">
+        <Lanyard position={[0, 0, 15]} gravity={[0, -40, 0]} />
       </div>
     </div>
   );
