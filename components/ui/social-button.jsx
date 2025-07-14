@@ -3,141 +3,152 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { Facebook, Instagram, Linkedin, Link } from "lucide-react";
-import { motion } from "motion/react";
+import { Facebook, Instagram, Linkedin, Link2, Share2 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function SocialButton({ className, ...props }) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
 
-  const shareButtons = [
+  // Replace these URLs with your actual social media profiles
+  const socialButtons = [
     {
       icon: Facebook,
-      label: "Share on Facebook",
-      color: "bg-[#5865F2] hover:bg-[#4752C4]",
+      label: "Facebook",
+      color: "bg-[#1877F2] hover:bg-[#166FE5]",
+      url: "https://facebook.com/yourprofile",
+      shareUrl: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        window.location.href
+      )}`,
     },
     {
       icon: Instagram,
-      label: "Share on Instagram",
-      color: "bg-[#C13584] hover:bg-[#A72F73]",
+      label: "Instagram",
+      color: "bg-[#E4405F] hover:bg-[#D42D5C]",
+      url: "https://instagram.com/yourprofile",
     },
     {
       icon: Linkedin,
-      label: "Share on LinkedIn",
+      label: "LinkedIn",
       color: "bg-[#0A66C2] hover:bg-[#0958AD]",
+      url: "https://linkedin.com/in/yourprofile",
+      shareUrl: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+        window.location.href
+      )}`,
     },
     {
-      icon: Link,
-      label: "Copy link",
+      icon: Link2,
+      label: "Copy Link",
       color: "bg-[#8A2BE2] hover:bg-[#7B1FA2]",
     },
   ];
 
-  const handleShare = (index) => {
+  const handleAction = (index, event) => {
+    event.preventDefault();
     setActiveIndex(index);
+
+    const button = socialButtons[index];
+
+    if (index === 3) {
+      // Copy link functionality
+      navigator.clipboard.writeText(window.location.href);
+    } else if (event.metaKey || event.ctrlKey || event.shiftKey) {
+      // Open in new tab if modifier key is pressed
+      window.open(button.shareUrl || button.url, "_blank");
+    } else {
+      // Default behavior (for demo purposes)
+      window.location.href = button.shareUrl || button.url;
+    }
+
     setTimeout(() => setActiveIndex(null), 300);
   };
 
   return (
     <div
-      className="relative"
-      onMouseEnter={() => setIsVisible(true)}
-      onMouseLeave={() => setIsVisible(false)}
+      className="relative h-14 w-full min-w-[200px]"
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
     >
+      {/* Main Button */}
       <motion.div
+        className="absolute top-0 left-0 w-full"
         animate={{
-          opacity: isVisible ? 0 : 1,
+          opacity: isExpanded ? 0 : 1,
+          x: isExpanded ? -20 : 0,
         }}
-        transition={{
-          duration: 0.2,
-          ease: "easeInOut",
-        }}
+        transition={{ duration: 0.2 }}
       >
         <Button
           className={cn(
-            "min-w-48 h-12 relative", // Increased size
+            "h-14 w-full",
             "bg-gradient-to-r from-purple-600 to-blue-500",
             "hover:from-purple-700 hover:to-blue-600",
-            "text-white",
+            "text-white text-lg",
             "border border-purple-400/30",
-            "transition-colors duration-200",
-            "text-lg", // Larger text
+            "transition-all duration-200",
             className
           )}
           {...props}
         >
           <span className="flex items-center gap-3">
-            {" "}
-            {/* Increased gap */}
-            <Link className="w-5 h-5" /> {/* Larger icon */}
-            Lets Connect
+            <Share2 className="w-5 h-5" />
+            Let's Connect
           </span>
         </Button>
       </motion.div>
 
+      {/* Expanded Social Buttons */}
       <motion.div
-        className="absolute top-0 left-0 flex h-12 overflow-hidden" // Increased height
+        className="absolute top-0 left-0 flex h-14"
         animate={{
-          width: isVisible ? "auto" : 0,
+          width: isExpanded ? "100%" : 0,
         }}
-        transition={{
-          duration: 0.3,
-          ease: [0.23, 1, 0.32, 1],
-        }}
+        transition={{ duration: 0.3 }}
       >
-        {shareButtons.map((button, i) => (
-          <motion.button
-            type="button"
-            key={`share-${button.label}`}
-            aria-label={button.label}
-            onClick={() => handleShare(i)}
+        {socialButtons.map((button, index) => (
+          <motion.a
+            key={button.label}
+            href={index === 3 ? "#" : button.shareUrl || button.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => handleAction(index, e)}
             className={cn(
-              "h-12", // Increased height
-              "w-12", // Increased width
-              "flex items-center justify-center",
+              "h-14 w-full flex items-center justify-center",
               button.color,
               "text-white",
-              i === 0 && "rounded-l-lg", // Larger rounded corners
-              i === 3 && "rounded-r-lg",
+              index === 0 && "rounded-l-lg",
+              index === socialButtons.length - 1 && "rounded-r-lg",
               "border-r border-white/20 last:border-r-0",
-              "outline-none",
-              "relative overflow-hidden",
+              "overflow-hidden relative",
               "transition-colors duration-200"
             )}
             animate={{
-              opacity: isVisible ? 1 : 0,
-              x: isVisible ? 0 : -20,
+              opacity: isExpanded ? 1 : 0,
+              x: isExpanded ? 0 : -20,
             }}
             transition={{
               duration: 0.3,
-              ease: [0.23, 1, 0.32, 1],
-              delay: isVisible ? i * 0.05 : 0,
+              delay: isExpanded ? index * 0.05 : 0,
             }}
           >
             <motion.div
-              className="relative z-10"
               animate={{
-                scale: activeIndex === i ? 0.85 : 1,
+                scale: activeIndex === index ? 0.85 : 1,
               }}
-              transition={{
-                duration: 0.2,
-                ease: "easeInOut",
-              }}
+              transition={{ duration: 0.2 }}
             >
-              <button.icon className="w-5 h-5" /> {/* Larger icon */}
+              <button.icon className="w-5 h-5" />
             </motion.div>
-            <motion.div
-              className="absolute inset-0 bg-white/20"
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: activeIndex === i ? 0.3 : 0,
-              }}
-              transition={{
-                duration: 0.2,
-                ease: "easeInOut",
-              }}
-            />
-          </motion.button>
+            {activeIndex === index && (
+              <motion.div
+                className="absolute inset-0 bg-white/20"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.3 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              />
+            )}
+          </motion.a>
         ))}
       </motion.div>
     </div>

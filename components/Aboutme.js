@@ -5,6 +5,7 @@ import BlurText from "@/components/ui/Blurtext";
 import SocialButton from "./ui/social-button";
 import Btn03 from "./ui/button03";
 
+
 export default function AboutMe() {
   const handleAnimationComplete = () => {
     console.log("Animasi selesai!");
@@ -12,6 +13,8 @@ export default function AboutMe() {
 
   return (
     <div className="pt-16 sm:pt-20 px-4 max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-10 lg:gap-16 relative">
+     
+
       {/* Text Section */}
       <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start">
         {/* Title and RotatingText */}
@@ -46,12 +49,12 @@ export default function AboutMe() {
         />
 
         {/* Buttons */}
-        <div className="w-full flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center lg:justify-start">
-          <div className="w-full sm:w-auto flex-1 max-w-xs">
-            <SocialButton className="w-full h-14 text-lg" />
+        <div className="w-full flex flex-wrap justify-center lg:justify-start gap-4">
+          <div className="w-full sm:w-auto">
+            <SocialButton className="h-14 px-8 text-lg" />
           </div>
-          <div className="w-full sm:w-auto flex-1 max-w-xs">
-            <Btn03 className="w-full h-14 text-lg" />
+          <div className="w-full sm:w-auto">
+            <Btn03 className="h-14 px-8 text-lg" />
           </div>
         </div>
       </div>
