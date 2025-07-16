@@ -5,34 +5,14 @@ import { FloatingDockdemo } from "@/components/Floatingdock";
 import Certificate from "@/components/Certificate";
 import ProjectsSection from "@/components/Project";
 import MultilingualLoader from "@/components/ui/multi-language-loader";
-import Aurora from "@/components/ui/bg-aurora";
 import TechStack from "@/components/ui/techstack";
-import Squares from "@/components/ui/squarebg";
 import MorphingDownloadButton from "@/components/ui/dowload-button";
+import GetInTouch from "@/components/ui/get-in-touch";
 
 export default function Home() {
   return (
     <div className="w-full mt-12 mb-20 relative">
-      {/* Aurora Background */}
-      <div className="absolute inset-0 -z-10 overflow-hidden opacity-20">
-        <Aurora
-          colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
-          blend={0.5}
-          amplitude={1.0}
-          speed={0.5}
-        />
-      </div>
-
-      {/* Squares Background */}
-      <div className="absolute inset-0 -z-10 opacity-10 dark:opacity-[0.03]">
-        <Squares
-          speed={0.5}
-          squareSize={40}
-          direction="diagonal"
-          borderColor="#888"
-          hoverFillColor="#222"
-        />
-      </div>
+     
 
       {/* Floating Download Button */}
       <div className="fixed bottom-8 right-8 z-50">
@@ -52,7 +32,7 @@ export default function Home() {
         {/* About Me Section */}
         <section
           id="about-me"
-          className="w-full flex flex-col items-center py-12 relative overflow-hidden"
+          
         >
           <AboutMe />
         </section>
@@ -60,7 +40,7 @@ export default function Home() {
         {/* Timeline Section */}
         <section
           id="timeline"
-          className="w-full py-12 border-t mt-12 flex flex-col items-center bg-white dark:bg-black"
+         
         >
           <TimelineSection />
         </section>
@@ -68,12 +48,12 @@ export default function Home() {
         {/* Certificates Section */}
         <section
           id="certificates"
-          className="w-full py-12 border-t mt-12 flex flex-col items-center bg-white dark:bg-black"
+          
         >
           <Certificate />
         </section>
 
-        {/* Projects Section */}
+      
         <section id="projects">
           <ProjectsSection />
         </section>
@@ -92,6 +72,9 @@ export default function Home() {
             <h2 className="text-xl md:text-2xl lg:text-4xl font-bold text-center text-black dark:text-white font-sans tracking-tight">
               Get in Touch
             </h2>
+          </div>
+          <div className="mt-6 max-w-2xl w-full px-4">
+            <GetInTouch />
           </div>
         </section>
       </MultilingualLoader>

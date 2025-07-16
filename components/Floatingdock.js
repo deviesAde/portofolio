@@ -9,6 +9,7 @@ import {
   IconNewSection,
   IconTerminal2,
 } from "@tabler/icons-react";
+import { Timer, FolderGit2, Code2, MessageSquareMore } from "lucide-react";
 
 export function FloatingDockdemo() {
   const [isVisible, setIsVisible] = useState(false);
@@ -51,30 +52,30 @@ export function FloatingDockdemo() {
       href: "#",
     },
     {
-      title: "Products",
-      icon: (
-        <IconTerminal2 className="h-4 w-4 text-neutral-500 dark:text-neutral-300" />
-      ),
-      href: "#",
-    },
-    {
-      title: "Components",
-      icon: (
-        <IconNewSection className="h-4 w-4 text-neutral-500 dark:text-neutral-300" />
-      ),
-      href: "#",
-    },
-    {
       title: "Changelog",
       icon: (
-        <IconExchange className="h-4 w-4 text-neutral-500 dark:text-neutral-300" />
+        <Timer className="h-4 w-4 text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#",
     },
     {
-      title: "Twitter",
+      title: "Projects",
       icon: (
-        <IconBrandX className="h-4 w-4 text-neutral-500 dark:text-neutral-300" />
+        <FolderGit2 className="h-4 w-4 text-neutral-500 dark:text-neutral-300" />
+      ),
+      href: "#",
+    },
+    {
+      title: "Tech Stack",
+      icon: (
+        <Code2 className="h-4 w-4 text-neutral-500 dark:text-neutral-300" />
+      ),
+      href: "#",
+    },
+    {
+      title: "get in touch",
+      icon: (
+        <MessageSquareMore className="h-4 w-4 text-neutral-500 dark:text-neutral-300" />
       ),
       href: "#",
     },
