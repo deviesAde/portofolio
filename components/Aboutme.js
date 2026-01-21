@@ -62,7 +62,7 @@ export default function AboutMe() {
           {/* Description */}
           <BlurText
             text="Saya Devies Ade Irawan, mahasiswa Universitas Jember yang antusias di bidang pemrograman dan teknologi. 💻 Saya senang memecahkan masalah, belajar hal baru, dan membangun solusi lewat software. Dengan semangat belajar tinggi, saya terus berkembang dan berkontribusi di dunia teknologi."
-            delay={150}
+            delay={50}
             animateBy="words"
             direction="top"
             onAnimationComplete={handleAnimationComplete}
@@ -75,14 +75,13 @@ export default function AboutMe() {
               <SocialButton className="h-14 px-8 text-lg" />
             </div>
             <div className="w-full sm:w-auto">
-              <Btn03 className="h-14 px-8 text-lg" />
             </div>
           </div>
         </div>
 
         {/* Lanyard Section */}
         <div className="w-full lg:w-1/2 h-auto lg:h-[550px] flex justify-center items-center mt-10 lg:mt-0">
-          <Lanyard position={[0, 0, 15]} gravity={[0, -40, 0]} />
+          <Lanyard position={[0, 0, 15]} gravity={[0, -30, 0]} />
         </div>
       </div>
     </div>

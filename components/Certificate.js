@@ -4,41 +4,28 @@ import BlurText from "@/components/ui/Blurtext";
 export default function Certificate() {
   const certificates = [
     {
-      imageSrc: "/images/devies.JPG",
-      altText: "Certificate 1",
-      captionText: "Certified Web Developer",
+      imageSrc: "/images/certif/certif1.JPEG",
     },
     {
-      imageSrc: "/images/devies.JPG",
-      altText: "Certificate 2",
-      captionText: "React & Frontend Specialist",
+      imageSrc: "/images/certif/certif2.JPEG",
     },
     {
-      imageSrc: "/images/devies.JPG",
-      altText: "Certificate 3",
-      captionText: "Full-Stack Developer",
+      imageSrc: "/images/certif/certif3.JPEG",
     },
+    {
+      imageSrc: "/images/certif/certif4.JPEG",
 
-    {
-      imageSrc: "/images/devies.JPG",
-      altText: "Certificate 3",
-      captionText: "Full-Stack Developer",
-    },
-    {
-      imageSrc: "/images/devies.JPG",
-      altText: "Certificate 3",
-      captionText: "Full-Stack Developer",
     },
   ];
 
   return (
     <div className="flex flex-col items-center">
       <BlurText
-        text="HERE ARE SOME OF MY CERTIFICATES"
+        text="SERTIFIKASI & PENCAPAIAN SAYA"
         delay={150}
         animateBy="words"
         direction="top"
-        className="text-lg font-bold text-center  mb-7"
+        className="text-lg font-bold text-center mb-7"
       />
       <div className="flex flex-wrap justify-center gap-6">
         {certificates.map((cert, index) => (
@@ -56,16 +43,10 @@ export default function Certificate() {
             showMobileWarning={false}
             showTooltip={true}
             displayOverlayContent={true}
-            overlayContent={
-              <p className="text-[oklch(0.496_0.265_301.924)] font-semibold text-center w-full">
-                {cert.captionText}
-              </p>
-            }
+          
           />
         ))}
       </div>
     </div>
   );
 }
-  
-
