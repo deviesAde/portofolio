@@ -27,7 +27,7 @@ export default function Home() {
         </div>
 
         <MultilingualLoader>
-         
+
           <section id="about-me">
             <AboutMe />
           </section>
@@ -60,10 +60,10 @@ export default function Home() {
             <TechStack />
           </section>
 
-   
+
           <section id="contact">
             <h2 className="text-4xl font-bold mb-8 text-center"> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-             Get In Touch
+              Get In Touch
             </span></h2>
             <GetInTouch />
           </section>

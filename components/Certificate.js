@@ -4,16 +4,16 @@ import BlurText from "@/components/ui/Blurtext";
 export default function Certificate() {
   const certificates = [
     {
-      imageSrc: "/images/certif/certif1.JPEG",
+      imageSrc: "/images/certif/image.png",
     },
     {
-      imageSrc: "/images/certif/certif2.JPEG",
+      imageSrc: "/images/certif/image2.png",
     },
     {
-      imageSrc: "/images/certif/certif3.JPEG",
+      imageSrc: "/images/certif/image3.png",
     },
     {
-      imageSrc: "/images/certif/certif4.JPEG",
+      imageSrc: "/images/certif/image1.png",
 
     },
   ];
