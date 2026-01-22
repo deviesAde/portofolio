@@ -11,26 +11,31 @@ const GetInTouch = () => {
     ]);
 
     const [input, setInput] = useState("");
-    const [step, setStep] = useState(0); // 0: Start/Name, 1: Email, 2: Message, 3: Sending, 4: Success
+    const [step, setStep] = useState(0); 
     const [formData, setFormData] = useState({ name: "", email: "", message: "" });
     const [isSending, setIsSending] = useState(false);
     const scrollRef = useRef(null);
     const inputRef = useRef(null);
 
-    // EmailJS Configuration - You can fill these in or use env vars
+   
     const EMAILJS_CONFIG = {
-        SERVICE_ID: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_id",
-        TEMPLATE_ID: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_id",
-        USER_ID: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "public_key",
+        SERVICE_ID: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        TEMPLATE_ID: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        USER_ID: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
     };
+
+ 
+    useEffect(() => {
+        if (EMAILJS_CONFIG.USER_ID) {
+            emailjs.init(EMAILJS_CONFIG.USER_ID);
+        }
+    }, [EMAILJS_CONFIG.USER_ID]);
 
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
     }, [history]);
-
-
 
     const addToHistory = (entry) => {
         setHistory(prev => [...prev, entry]);
@@ -75,6 +80,15 @@ const GetInTouch = () => {
             setIsSending(true);
             setStep(3);
 
+
+            if (!EMAILJS_CONFIG.SERVICE_ID || !EMAILJS_CONFIG.TEMPLATE_ID || !EMAILJS_CONFIG.USER_ID) {
+                console.error("EmailJS Config Missing:", EMAILJS_CONFIG);
+                addToHistory({ type: "error", content: "Konfigurasi EmailJS tidak lengkap. Cek environment variables." });
+                setIsSending(false);
+                setStep(2);
+                return;
+            }
+
             try {
                 const templateParams = {
                     from_name: formData.name,
@@ -83,20 +97,35 @@ const GetInTouch = () => {
                     to_email: "irawandevies@gmail.com"
                 };
 
-                await emailjs.send(
+                const result = await emailjs.send(
                     EMAILJS_CONFIG.SERVICE_ID,
                     EMAILJS_CONFIG.TEMPLATE_ID,
                     templateParams,
                     EMAILJS_CONFIG.USER_ID
                 );
 
+                console.log("EmailJS Success:", result.text);
                 addToHistory({ type: "success", content: "Pesan berhasil dikirim ke irawandevies@gmail.com!" });
                 addToHistory({ type: "system", content: "Terima kasih telah menghubungi saya. Ketik 'clear' untuk kirim pesan baru." });
                 setStep(4);
             } catch (error) {
-                console.error("EmailJS Error:", error);
-                addToHistory({ type: "error", content: "Gagal mengirim pesan. Silakan coba lagi nanti." });
-                setStep(2); // Go back to message step or let user try again
+
+                console.error("Full EmailJS Error:", error);
+
+                let errorDetail = "Kesalahan tidak diketahui";
+                if (error && typeof error === 'object') {
+                    try {
+                    
+                        errorDetail = error.text || error.message || JSON.stringify(error);
+                        if (errorDetail === "{}") errorDetail = "Blocked or Empty Response (Check Ad-blocker)";
+                    } catch (e) {
+                        errorDetail = String(error);
+                    }
+                }
+
+                addToHistory({ type: "error", content: `Gagal mengirim: ${errorDetail}` });
+                addToHistory({ type: "system", content: "💡 Tip: Pastikan Ad-blocker dimatikan atau coba mode Incognito/Private browser." });
+                setStep(2);
             } finally {
                 setIsSending(false);
             }
@@ -124,7 +153,7 @@ const GetInTouch = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 onViewportEnter={() => {
-                   
+
                     if (window.innerWidth >= 768 && inputRef.current) {
                         inputRef.current.focus();
                     }
