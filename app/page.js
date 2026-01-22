@@ -13,20 +13,18 @@ import GetInTouch from "@/components/getintouch";
 export default function Home() {
   return (
     <div className="w-full relative">
-      {/* Navbar */}
-      <Navbar />
-
       {/* Main Content with top padding to account for fixed navbar */}
       <div className="pt-16">
-        <div className="fixed bottom-8 right-8 z-50">
-          <MorphingDownloadButton
-            className="h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all"
-            resumeUrl="/RESUME_DEVIES_ADE.pdf"
-            resumeName="Devies_Ade_Irawan_CV.pdf"
-          />
-        </div>
-
         <MultilingualLoader>
+          <div className="fixed bottom-8 right-8 z-50">
+            <MorphingDownloadButton
+              className="h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all"
+              resumeUrl="/RESUME_DEVIES_ADE.pdf"
+              resumeName="Devies_Ade_Irawan_CV.pdf"
+            />
+          </div>
+          {/* Navbar */}
+          <Navbar />
 
           <section id="about-me">
             <AboutMe />

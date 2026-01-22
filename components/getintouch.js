@@ -30,11 +30,7 @@ const GetInTouch = () => {
         }
     }, [history]);
 
-    useEffect(() => {
-        if (inputRef.current) {
-            inputRef.current.focus();
-        }
-    }, []);
+
 
     const addToHistory = (entry) => {
         setHistory(prev => [...prev, entry]);
@@ -115,12 +111,27 @@ const GetInTouch = () => {
         return "➜ ";
     };
 
+    const handleContainerClick = () => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    };
+
     return (
-        <div className="w-full max-w-4xl mx-auto py-12 px-4">
+        <div className="w-full max-w-4xl mx-auto py-8 sm:py-12 px-4">
             <motion.div
-                initial={{ opacity: 0, scale: 0.98 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                className="relative bg-[#0d0d0d] rounded-lg border border-purple-500/20 shadow-2xl overflow-hidden font-mono text-sm leading-relaxed"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                onViewportEnter={() => {
+                   
+                    if (window.innerWidth >= 768 && inputRef.current) {
+                        inputRef.current.focus();
+                    }
+                }}
+                viewport={{ once: false, amount: 0.5 }}
+                onClick={handleContainerClick}
+                className="relative bg-[#0d0d0d] rounded-lg border border-purple-500/20 shadow-2xl overflow-hidden font-mono text-[12px] sm:text-sm leading-relaxed cursor-text"
             >
                 {/* Terminal Header */}
                 <div className="bg-[#1a1a1a] px-4 py-2 border-b border-purple-500/10 flex items-center justify-between">
@@ -138,7 +149,7 @@ const GetInTouch = () => {
                 {/* Terminal Body */}
                 <div
                     ref={scrollRef}
-                    className="h-[400px] p-6 overflow-y-auto text-purple-100/90 scroll-smooth"
+                    className="h-[300px] sm:h-[400px] p-4 sm:p-6 overflow-y-auto text-purple-100/90 scroll-smooth"
                 >
                     {history.map((line, i) => (
                         <div key={i} className="mb-2">
@@ -175,7 +186,6 @@ const GetInTouch = () => {
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 className="bg-transparent border-none outline-none flex-1 text-purple-100 caret-purple-500"
-                                autoFocus
                                 disabled={isSending || step === 4}
                             />
                             {isSending && <Loader2 className="w-4 h-4 animate-spin text-purple-400" />}

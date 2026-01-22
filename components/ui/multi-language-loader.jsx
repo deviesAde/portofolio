@@ -54,9 +54,9 @@ const MultilingualLoader = ({ children }) => {
     let progressInterval;
     let loadingTimeout;
 
-  
+
     const totalDuration = greetings.length * 800 + 500;
-    const progressStep = 100 / (totalDuration / 50); 
+    const progressStep = 100 / (totalDuration / 50);
 
     progressInterval = setInterval(() => {
       setLoadingProgress((prev) => {
@@ -68,7 +68,7 @@ const MultilingualLoader = ({ children }) => {
       });
     }, 50);
 
-   
+
     languageInterval = setInterval(() => {
       setCurrentLanguage((prev) => (prev + 1) % greetings.length);
     }, 800);
@@ -79,11 +79,12 @@ const MultilingualLoader = ({ children }) => {
       clearInterval(progressInterval);
       setLoadingProgress(100);
       setIsLoading(false);
-      
-      
+
+
       setTimeout(() => {
         setShowContent(true);
-      }, 500);
+        window.scrollTo(0, 0);
+      }, 100);
     }, totalDuration);
 
     return () => {
@@ -98,9 +99,8 @@ const MultilingualLoader = ({ children }) => {
       <AnimatePresence mode="wait">
         {isLoading && (
           <motion.div
-            initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.3 }}
             className="fixed inset-0 bg-white dark:bg-gray-900 z-50 flex flex-col items-center justify-center gap-8 overflow-hidden"
           >
             {/* Purple Particles Background */}
@@ -172,7 +172,7 @@ const MultilingualLoader = ({ children }) => {
                 <p className="text-gray-600 dark:text-gray-400 text-lg">
                   {greetings[currentLanguage].language}
                 </p>
-                
+
                 {/* Loading Progress */}
                 <div className="w-64 space-y-2">
                   {/* Progress Bar */}
@@ -184,7 +184,7 @@ const MultilingualLoader = ({ children }) => {
                       transition={{ duration: 0.1 }}
                     />
                   </div>
-                  
+
                   {/* Progress Percentage */}
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-500 dark:text-gray-400 font-medium">
@@ -224,11 +224,10 @@ const MultilingualLoader = ({ children }) => {
                     animate={{
                       opacity: loadingProgress > (index + 1) * 25 ? 1 : 0.3,
                     }}
-                    className={`text-xs ${
-                      loadingProgress > (index + 1) * 25
-                        ? "text-purple-600 dark:text-purple-400 font-medium"
-                        : "text-gray-400 dark:text-gray-500"
-                    }`}
+                    className={`text-xs ${loadingProgress > (index + 1) * 25
+                      ? "text-purple-600 dark:text-purple-400 font-medium"
+                      : "text-gray-400 dark:text-gray-500"
+                      }`}
                   >
                     {loadingProgress > (index + 1) * 25 ? "✓" : "○"} {step}
                   </motion.div>
@@ -249,12 +248,12 @@ const MultilingualLoader = ({ children }) => {
         )}
       </AnimatePresence>
 
-      
+
       {showContent && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
         >
           {children}
         </motion.div>
