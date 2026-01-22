@@ -12,26 +12,26 @@ export default function SocialButton({ className, ...props }) {
 
   // Replace these URLs with your actual social media profiles
   const socialButtons = [
-    {
-      icon: Facebook,
-      label: "Facebook",
-      color: "bg-[#1877F2] hover:bg-[#166FE5]",
-      url: "https://facebook.com/yourprofile",
-      shareUrl: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        window.location.href
-      )}`,
-    },
+    // {
+    //   icon: Facebook,
+    //   label: "Facebook",
+    //   color: "bg-[#1877F2] hover:bg-[#166FE5]",
+    //   url: "https://facebook.com/devies.ade",
+    //   shareUrl: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+    //     window.location.href
+    //   )}`,
+    // },
     {
       icon: Instagram,
       label: "Instagram",
       color: "bg-[#E4405F] hover:bg-[#D42D5C]",
-      url: "https://instagram.com/yourprofile",
+      url: "https://instagram.com/deviesadee",
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
       color: "bg-[#0A66C2] hover:bg-[#0958AD]",
-      url: "https://linkedin.com/in/yourprofile",
+      url: "https://linkedin.com/in/deviesade",
       shareUrl: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
         window.location.href
       )}`,
@@ -39,6 +39,7 @@ export default function SocialButton({ className, ...props }) {
     {
       icon: Link2,
       label: "Copy Link",
+      url: "https://github.com/deviesAde",
       color: "bg-[#8A2BE2] hover:bg-[#7B1FA2]",
     },
   ];

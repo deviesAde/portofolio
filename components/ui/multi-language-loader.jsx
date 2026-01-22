@@ -4,7 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const MultilingualLoader = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [showContent, setShowContent] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState(0);
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const [particles, setParticles] = useState([]);
 
   // Create purple particles
@@ -48,30 +50,58 @@ const MultilingualLoader = ({ children }) => {
   ];
 
   useEffect(() => {
-    const languageInterval = setInterval(() => {
+    let languageInterval;
+    let progressInterval;
+    let loadingTimeout;
+
+  
+    const totalDuration = greetings.length * 800 + 500;
+    const progressStep = 100 / (totalDuration / 50); 
+
+    progressInterval = setInterval(() => {
+      setLoadingProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(progressInterval);
+          return 100;
+        }
+        return Math.min(prev + progressStep, 100);
+      });
+    }, 50);
+
+   
+    languageInterval = setInterval(() => {
       setCurrentLanguage((prev) => (prev + 1) % greetings.length);
     }, 800);
 
-    const loadingTimeout = setTimeout(() => {
+
+    loadingTimeout = setTimeout(() => {
       clearInterval(languageInterval);
+      clearInterval(progressInterval);
+      setLoadingProgress(100);
       setIsLoading(false);
-    }, greetings.length * 800 + 500);
+      
+      
+      setTimeout(() => {
+        setShowContent(true);
+      }, 500);
+    }, totalDuration);
 
     return () => {
       clearInterval(languageInterval);
+      clearInterval(progressInterval);
       clearTimeout(loadingTimeout);
     };
   }, []);
 
   return (
     <>
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isLoading && (
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center gap-8 overflow-hidden"
+            className="fixed inset-0 bg-white dark:bg-gray-900 z-50 flex flex-col items-center justify-center gap-8 overflow-hidden"
           >
             {/* Purple Particles Background */}
             <div className="absolute inset-0 overflow-hidden">
@@ -87,7 +117,7 @@ const MultilingualLoader = ({ children }) => {
                     y: `${particle.y}vh`,
                   }}
                   transition={{ duration: 0 }}
-                  className={`absolute rounded-full bg-purple-400`}
+                  className={`absolute rounded-full bg-purple-400 dark:bg-purple-600`}
                   style={{
                     width: `${particle.size}px`,
                     height: `${particle.size}px`,
@@ -108,9 +138,9 @@ const MultilingualLoader = ({ children }) => {
               }}
             >
               <div className="mb-8 relative">
-                <div className="absolute -inset-4 bg-purple-100 rounded-full blur-md opacity-70" />
-                <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-purple-100 to-purple-50 border-2 border-purple-200 flex items-center justify-center">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center">
+                <div className="absolute -inset-4 bg-purple-100 dark:bg-purple-900/30 rounded-full blur-md opacity-70" />
+                <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/20 dark:to-purple-800/10 border-2 border-purple-200 dark:border-purple-700/30 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 dark:from-purple-500 dark:to-purple-700 flex items-center justify-center">
                     <svg
                       className="w-6 h-6 text-white"
                       fill="none"
@@ -128,7 +158,7 @@ const MultilingualLoader = ({ children }) => {
                 </div>
               </div>
 
-              <div className="text-center space-y-2">
+              <div className="text-center space-y-6">
                 <motion.h2
                   key={currentLanguage}
                   initial={{ y: 20, opacity: 0 }}
@@ -139,17 +169,79 @@ const MultilingualLoader = ({ children }) => {
                 >
                   {greetings[currentLanguage].text}
                 </motion.h2>
-                <p className="text-gray-600 text-lg">
+                <p className="text-gray-600 dark:text-gray-400 text-lg">
                   {greetings[currentLanguage].language}
                 </p>
+                
+                {/* Loading Progress */}
+                <div className="w-64 space-y-2">
+                  {/* Progress Bar */}
+                  <div className="h-2 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
+                    <motion.div
+                      className="h-full bg-gradient-to-r from-purple-500 to-fuchsia-600 rounded-full"
+                      initial={{ width: "0%" }}
+                      animate={{ width: `${loadingProgress}%` }}
+                      transition={{ duration: 0.1 }}
+                    />
+                  </div>
+                  
+                  {/* Progress Percentage */}
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+                      Loading...
+                    </span>
+                    <motion.span
+                      key={loadingProgress}
+                      initial={{ scale: 0.8, opacity: 0.5 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ type: "spring", stiffness: 200 }}
+                      className="text-lg font-bold text-purple-600 dark:text-purple-400"
+                    >
+                      {Math.round(loadingProgress)}%
+                    </motion.span>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
+            {/* Loading Steps */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="absolute bottom-16 space-y-1 text-center"
+            >
+              <div className="flex justify-center space-x-2">
+                {[
+                  "Initializing...",
+                  "Loading assets...",
+                  "Preparing interface...",
+                  "Almost ready...",
+                ].map((step, index) => (
+                  <motion.div
+                    key={step}
+                    initial={{ opacity: 0.3 }}
+                    animate={{
+                      opacity: loadingProgress > (index + 1) * 25 ? 1 : 0.3,
+                    }}
+                    className={`text-xs ${
+                      loadingProgress > (index + 1) * 25
+                        ? "text-purple-600 dark:text-purple-400 font-medium"
+                        : "text-gray-400 dark:text-gray-500"
+                    }`}
+                  >
+                    {loadingProgress > (index + 1) * 25 ? "✓" : "○"} {step}
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Footer Text */}
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1 }}
-              className="text-gray-400 text-sm absolute bottom-10"
+              className="text-gray-400 dark:text-gray-600 text-sm absolute bottom-8"
             >
               Preparing your experience...
             </motion.p>
@@ -157,7 +249,16 @@ const MultilingualLoader = ({ children }) => {
         )}
       </AnimatePresence>
 
-      {!isLoading && children}
+      
+      {showContent && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {children}
+        </motion.div>
+      )}
     </>
   );
 };

@@ -10,7 +10,6 @@ import MorphingDownloadButton from "@/components/ui/dowload-button";
 import GitHubAllInOne from '@/components/GitHubAllInOne';
 import GetInTouch from "@/components/getintouch";
 
-
 export default function Home() {
   return (
     <div className="w-full relative">
@@ -19,7 +18,6 @@ export default function Home() {
 
       {/* Main Content with top padding to account for fixed navbar */}
       <div className="pt-16">
-
         <div className="fixed bottom-8 right-8 z-50">
           <MorphingDownloadButton
             className="h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all"
@@ -29,10 +27,8 @@ export default function Home() {
         </div>
 
         <MultilingualLoader>
-          {/* About Me Section */}
-          <section
-            id="about-me"
-          >
+         
+          <section id="about-me">
             <AboutMe />
           </section>
 
@@ -43,17 +39,14 @@ export default function Home() {
               token={process.env.NEXT_PUBLIC_GITHUB_TOKEN}
             />
           </section>
+
           {/* Timeline Section */}
-          <section
-            id="timeline"
-          >
+          <section id="timeline">
             <TimelineSection />
           </section>
 
           {/* Certificates Section */}
-          <section
-            id="certificates"
-          >
+          <section id="certificates">
             <Certificate />
           </section>
 
@@ -67,12 +60,11 @@ export default function Home() {
             <TechStack />
           </section>
 
-          {/* Contact Section */}
-          <section
-            id="contact"
-            className="w-full py-12 mt-12 flex flex-col items-center bg-white dark:bg-black"
-          >
-            <h2 className="text-4xl font-bold mb-8 text-center">Get In Touch</h2>
+   
+          <section id="contact">
+            <h2 className="text-4xl font-bold mb-8 text-center"> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
+             Get In Touch
+            </span></h2>
             <GetInTouch />
           </section>
         </MultilingualLoader>
