@@ -41,7 +41,7 @@ export default function AboutMe() {
           {/* Title and RotatingText */}
           <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center lg:justify-start gap-3 mb-10">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center lg:text-left">
-              I'M READY FOR
+              DEVIES ADE IRAWAN |
             </h1>
             <div className="mt-2 sm:mt-0">
               <RotatingText
