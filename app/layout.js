@@ -35,6 +35,9 @@ export const metadata = {
     title: "Devies Ade Irawan | Fullstack Developer Portfolio",
     description: "Mahasiswa Universitas Jember yang antusias di bidang pemrograman dan teknologi.",
   },
+  verification: {
+    google: "uvN_umDTuYE3JRyIdrkWywyUhtgE0_oAczMWpsdtOFk",
+  },
 };
 
 export default function RootLayout({ children }) {
