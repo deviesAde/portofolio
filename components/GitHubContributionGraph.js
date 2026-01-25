@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 const GitHubContributionGraph = ({ username }) => {
     const [contributions, setContributions] = useState([]);
@@ -142,10 +143,22 @@ const GitHubContributionGraph = ({ username }) => {
 
                     <div className="flex gap-1.5">
                         {recentWeeks.map((week, weekIndex) => (
-                            <div key={`week-${weekIndex}`} className="flex flex-col gap-1.5">
+                            <motion.div
+                                key={`week-${weekIndex}`}
+                                initial="hidden"
+                                animate="visible"
+                                variants={{
+                                    visible: { transition: { staggerChildren: 0.05, delayChildren: weekIndex * 0.1 } }
+                                }}
+                                className="flex flex-col gap-1.5"
+                            >
                                 {week.map((day, dayIndex) => (
-                                    <div
+                                    <motion.div
                                         key={`day-${weekIndex}-${dayIndex}`}
+                                        variants={{
+                                            hidden: { scale: 0, opacity: 0 },
+                                            visible: { scale: 1, opacity: 1 }
+                                        }}
                                         className={`w-5 h-5 ${getColor(day.count)} rounded transition-all duration-200 hover:scale-125 hover:shadow-lg hover:shadow-purple-500/50 cursor-pointer relative group`}
                                         title={getTooltipText(day)}
                                     >
@@ -155,9 +168,9 @@ const GitHubContributionGraph = ({ username }) => {
                                                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-purple-900 dark:border-t-purple-100" />
                                             </div>
                                         </div>
-                                    </div>
+                                    </motion.div>
                                 ))}
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
 
@@ -200,10 +213,14 @@ const GitHubContributionGraph = ({ username }) => {
 
 const StatCardInline = ({ title, value }) => {
     return (
-        <div className="flex flex-col items-center gap-1">
+        <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center gap-1"
+        >
             <p className="text-xs font-medium text-purple-600 dark:text-purple-400 uppercase tracking-wide">{title}</p>
             <p className="text-2xl font-bold text-purple-900 dark:text-purple-50">{value}</p>
-        </div>
+        </motion.div>
     );
 };
 

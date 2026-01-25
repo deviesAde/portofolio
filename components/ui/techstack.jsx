@@ -2,6 +2,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Star, Rocket, Cpu, Zap, Flame } from "lucide-react";
 import Squares from "./squarebg";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Magnetic from "./Magnetic";
+
+gsap.registerPlugin(ScrollTrigger);
 import {
   SiLaravel,
   SiMysql,
@@ -109,7 +114,7 @@ const techStack = [
   }
 ];
 
-// Galaga particles component
+
 const GalagaEffect = () => {
   const [particles, setParticles] = useState([]);
 
@@ -152,7 +157,37 @@ const GalagaEffect = () => {
 
 const TechStack = () => {
   const sectionRef = useRef(null);
-  const [hoveredCard, setHoveredCard] = useState(null);
+  const cardsRef = useRef(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 500);
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(".tech-card-trigger",
+        { y: 40, opacity: 0, scale: 0.9 },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.05,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: cardsRef.current,
+            start: "top 90%",
+            toggleActions: "play none none none"
+          }
+        }
+      );
+    }, sectionRef);
+
+    return () => {
+      ctx.revert();
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
     <section
@@ -173,39 +208,31 @@ const TechStack = () => {
       {/* Galaga Effect */}
       <GalagaEffect />
 
-      {/* Custom cursor */}
-      <div className={`fixed top-0 left-0 w-12 h-12 pointer-events-none z-[9999] flex items-center justify-center p-0 m-0 transition-opacity duration-300 ${hoveredCard ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="absolute h-12 w-[1px] bg-blue-500/50" />
-        <div className="absolute w-12 h-[1px] bg-blue-500/50" />
-        <div className="w-1 h-1 bg-blue-600 rounded-full shadow-[0_0_8px_rgba(37,99,235,0.8)]" />
-      </div>
-
       <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-medium mb-4">
-            <Rocket className="w-3 h-3" />
-            <span>Tech Stack & Expertise</span>
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-accent/5 border border-accent/20 text-accent text-[10px] font-bold uppercase tracking-widest mb-6">
+            <Cpu className="w-3 h-3" />
+            <span>Capability Deck</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100">
-            Skills that <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Power</span> innovation
+          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-foreground mb-6">
+            TECH <span className="text-accent italic font-light drop-shadow-[0_0_10px_rgba(168,85,247,0.2)]">STACK</span>
           </h2>
-          <p className="mt-4 text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto italic">
-            "Building the future with cutting-edge technologies"
+          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-sm md:text-base border-t border-accent/10 pt-6">
+            "Technologies and tools used across my software and AI projects."
           </p>
-          
-        
-          
         </div>
 
         {/* Square Grid Layout */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <div ref={cardsRef} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {techStack.map((tech, idx) => (
-            <SquareCard 
-              key={tech.name} 
-              tech={tech} 
-              index={idx}
-              onHover={setHoveredCard}
-            />
+            <div key={tech.name} className="tech-card-trigger">
+              <Magnetic>
+                <SquareCard
+                  tech={tech}
+                  index={idx}
+                />
+              </Magnetic>
+            </div>
           ))}
         </div>
       </div>
@@ -213,7 +240,7 @@ const TechStack = () => {
   );
 };
 
-const SquareCard = ({ tech, index, onHover }) => {
+const SquareCard = ({ tech, index }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -226,12 +253,10 @@ const SquareCard = ({ tech, index, onHover }) => {
 
   const handleMouseEnter = () => {
     setIsHovered(true);
-    onHover(tech.name);
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    onHover(null);
   };
 
   return (
@@ -239,101 +264,55 @@ const SquareCard = ({ tech, index, onHover }) => {
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative group aspect-square overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-neutral-900/50 backdrop-blur-sm p-4 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-blue-500/30 dark:hover:border-blue-500/50"
-      style={{
-        animation: `fadeInUp 0.5s ease-out ${index * 0.05}s both`,
-      }}
+      className="relative group aspect-square overflow-hidden border border-foreground/5 bg-card/30 backdrop-blur-md p-6 flex flex-col justify-between cursor-crosshair transition-all duration-500 hover:border-accent/30 rounded-none shadow-sm h-full w-full"
     >
-      {/* Spotlight Effect Overlay */}
-      <div 
-        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      {/* Background Glow */}
+      <div
+        className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-700"
         style={{
-          background: `radial-gradient(200px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(37,99,235,0.1), transparent 80%)`,
+          background: `radial-gradient(150px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(168,85,247,0.1), transparent 80%)`,
         }}
       />
 
       <div className="relative z-10 flex flex-col h-full">
-        {/* Top section with icon */}
-        <div className="flex justify-between items-start mb-3">
-          <div className={`p-3 rounded-xl transition-all duration-500 shadow-sm border ${
-            isHovered 
-              ? 'scale-110 bg-gradient-to-br from-white to-neutral-100 dark:from-neutral-800 dark:to-neutral-900 border-blue-200 dark:border-blue-800' 
-              : 'bg-neutral-100 dark:bg-neutral-800 border-neutral-200/50 dark:border-neutral-700/50'
-          }`}>
-            <tech.icon className="w-5 h-5 md:w-6 md:h-6 transition-colors duration-500" style={{ color: tech.color }} />
+        {/* Top section */}
+        <div className="flex justify-between items-start">
+          <div className={`p-3 border transition-all duration-700 ${isHovered
+            ? 'bg-accent/10 border-accent/40 scale-110 shadow-[0_0_20px_rgba(168,85,247,0.2)]'
+            : 'bg-muted/30 border-foreground/5'
+            }`}>
+            <tech.icon className="w-6 h-6 transition-colors duration-700" style={{ color: isHovered ? '#a855f7' : tech.color }} />
           </div>
           {tech.expert && (
-            <div className="bg-yellow-500/10 border border-yellow-500/20 p-1 rounded-full">
-              <Star className="w-2.5 h-2.5 text-yellow-500 fill-yellow-500" />
+            <div className="text-[10px] font-mono text-accent/40 font-bold uppercase tracking-widest hidden group-hover:block blur-none">
+              Level.EX
             </div>
           )}
         </div>
 
-        {/* Middle section with name and category */}
-        <div className="flex-1">
-          <h3 className={`text-base font-bold transition-all duration-300 ${
-            isHovered 
-              ? 'text-blue-600 dark:text-blue-400 translate-x-1' 
-              : 'text-neutral-800 dark:text-neutral-100'
-          }`}>
-            {tech.name}
-          </h3>
-          <p className="text-xs text-neutral-500 dark:text-neutral-500 uppercase tracking-widest font-semibold mt-1">
+        {/* Bottom content */}
+        <div className="mt-auto">
+          <p className="text-[10px] font-mono text-muted-foreground/60 uppercase tracking-[0.2em] mb-1">
             {tech.category}
           </p>
-        </div>
+          <h3 className={`text-lg font-bold tracking-tight transition-all duration-500 ${isHovered
+            ? 'text-accent translate-x-1'
+            : 'text-foreground'
+            }`}>
+            {tech.name}
+          </h3>
 
-        {/* Bottom section with minimal level indicator */}
-        <div className="mt-auto pt-3">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-1">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <div
-                  key={i}
-                  className={`w-1 h-1 rounded-full transition-all duration-300 ${
-                    i < Math.floor(tech.level / 25)
-                      ? "bg-gradient-to-r from-blue-500 to-purple-600"
-                      : "bg-neutral-300 dark:bg-neutral-700"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-          
-          {/* Minimal progress indicator */}
-          <div className="h-1 w-full bg-neutral-100 dark:bg-neutral-800 rounded-full overflow-hidden mt-2">
-            <div 
-              className="h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-1000"
-              style={{ 
-                width: isHovered ? `${tech.level}%` : '0%',
-                animation: isHovered ? 'widthGrow 1s ease-out forwards' : 'none'
+          <div className="h-0.5 w-full bg-foreground/[0.03] mt-4 overflow-hidden">
+            <div
+              className="h-full bg-accent transition-all duration-1000 ease-out"
+              style={{
+                width: isHovered ? `${tech.level}%` : '4px',
               }}
             />
           </div>
         </div>
       </div>
 
-      {/* Galaga-style corner accents */}
-      <div className={`absolute top-0 left-0 w-4 h-4 border-t border-l transition-all duration-500 ${
-        isHovered ? 'border-blue-500' : 'border-blue-500/30'
-      }`} />
-      <div className={`absolute top-0 right-0 w-4 h-4 border-t border-r transition-all duration-500 ${
-        isHovered ? 'border-purple-500' : 'border-purple-500/30'
-      }`} />
-      <div className={`absolute bottom-0 left-0 w-4 h-4 border-b border-l transition-all duration-500 ${
-        isHovered ? 'border-green-500' : 'border-green-500/30'
-      }`} />
-      <div className={`absolute bottom-0 right-0 w-4 h-4 border-b border-r transition-all duration-500 ${
-        isHovered ? 'border-yellow-500' : 'border-yellow-500/30'
-      }`} />
-
-      {/* Retro pixel effect on hover */}
-      <div className={`absolute inset-0 transition-opacity duration-300 pointer-events-none ${
-        isHovered ? 'opacity-100' : 'opacity-0'
-      }`}>
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent" />
-      </div>
     </div>
   );
 };

@@ -70,7 +70,6 @@ export default function SocialButton({ className, ...props }) {
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}
     >
-      {/* Main Button */}
       <motion.div
         className="absolute top-0 left-0 w-full"
         animate={{
@@ -82,17 +81,17 @@ export default function SocialButton({ className, ...props }) {
         <Button
           className={cn(
             "h-14 w-full",
-            "bg-gradient-to-r from-purple-600 to-blue-500",
-            "hover:from-purple-700 hover:to-blue-600",
-            "text-white text-lg",
-            "border border-purple-400/30",
-            "transition-all duration-200",
+            "bg-accent/5 hover:bg-accent/15 backdrop-blur-sm",
+            "text-foreground text-lg uppercase tracking-widest font-bold",
+            "border border-accent/40 hover:border-accent",
+            "shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:shadow-[0_0_25px_rgba(168,85,247,0.3)]",
+            "transition-all duration-500 rounded-none",
             className
           )}
           {...props}
         >
-          <span className="flex items-center gap-3">
-            <Share2 className="w-5 h-5" />
+          <span className="flex items-center gap-4">
+            <Share2 className="w-5 h-5 text-accent" />
             Let's Connect
           </span>
         </Button>

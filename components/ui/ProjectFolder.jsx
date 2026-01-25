@@ -6,32 +6,51 @@ export default function ProjectFolder({ project, onOpen }) {
   return (
     <button
       onClick={onOpen}
-      className="group relative h-48 sm:h-56 bg-gradient-to-br from-purple-50 via-white to-transparent dark:from-purple-950 dark:to-gray-900 border-2 border-purple-200 dark:border-purple-800 rounded-xl p-6 hover:border-purple-400 dark:hover:border-purple-600 transition-all duration-300 hover:shadow-lg hover:shadow-purple-200 dark:hover:shadow-purple-900/50 flex flex-col justify-center items-center gap-4 cursor-pointer"
+      className="group relative w-full aspect-[4/5] bg-card border border-foreground/10 p-8 hover:border-accent/40 transition-all duration-500 flex flex-col justify-between items-start text-left overflow-hidden rounded-none"
     >
-      {/* Folder Icon */}
-      <div className="relative">
-        <FolderOpen
-          size={56}
-          className="text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300"
-        />
-        <div className="absolute inset-0 blur-xl bg-purple-300/30 dark:bg-purple-500/30 group-hover:bg-purple-300/50 dark:group-hover:bg-purple-500/50 -z-10 transition-colors duration-300" />
+      {/* Background Accent */}
+      <div className="absolute top-0 right-0 w-32 h-32 bg-accent/20 blur-[80px] group-hover:bg-accent/20 transition-colors duration-500" />
+
+      {/* Corner Detail */}
+      <div className="absolute top-0 left-0 w-6 h-6 border-t border-l border-foreground/20 group-hover:border-accent transition-colors duration-500" />
+
+      {/* Top Section */}
+      <div className="relative z-10 w-full flex justify-between items-start">
+        <div className="p-3 bg-muted/50 border border-foreground/5 group-hover:border-accent/20 transition-colors duration-500 rounded-none">
+          <FolderOpen
+            size={24}
+            className="text-muted-foreground group-hover:text-accent transition-colors duration-500"
+          />
+        </div>
+        <span className="text-[10px] font-mono text-muted-foreground/40 group-hover:text-accent/40 uppercase tracking-widest">
+          Ref. {project.id.toString().padStart(3, '0')}
+        </span>
       </div>
 
-      {/* Text Content */}
-      <div className="text-center space-y-2">
-        <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
-          {project.name}
-        </h3>
-        <p className="text-sm text-gray-600 dark:text-gray-400 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
-          {project.role}
-        </p>
-        <p className="text-xs text-gray-500 dark:text-gray-500">
-          {project.date}
-        </p>
+      {/* Middle/Bottom Content */}
+      <div className="relative z-10 space-y-4">
+        <div className="space-y-1">
+          <p className="text-[10px] font-bold text-accent uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+            {project.role}
+          </p>
+          <h3 className="text-2xl font-bold tracking-tight text-foreground leading-tight group-hover:text-accent transition-colors duration-500">
+            {project.name}
+          </h3>
+        </div>
+
+        <div className="flex items-center gap-4 border-t border-foreground/5 pt-4">
+          <p className="text-xs font-mono text-muted-foreground">
+            {project.date}
+          </p>
+          <div className="h-1 w-1 bg-accent/30 rounded-full shadow-[0_0_5px_#a855f7]" />
+          <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">
+            {project.tech?.[0] || 'Web Dev'}
+          </p>
+        </div>
       </div>
 
-      {/* Hover Indicator */}
-      <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-purple-200/0 via-purple-200/10 dark:via-purple-500/10 to-purple-200/0" />
+      {/* Technical Stripe on hover */}
+      <div className="absolute bottom-0 left-0 w-full h-[2px] bg-accent/0 group-hover:bg-accent/60 transition-all duration-700 shadow-[0_0_15px_#a855f7]" />
     </button>
   )
 }

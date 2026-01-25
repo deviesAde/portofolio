@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const GitHubReposAndActivity = ({ username, token }) => {
-  const [activeTab, setActiveTab] = useState('repos');
   const [repos, setRepos] = useState([]);
   const [activity, setActivity] = useState([]);
   const [loading, setLoading] = useState({ repos: true, activity: true });
@@ -95,19 +95,31 @@ const GitHubReposAndActivity = ({ username, token }) => {
     }
 
     return (
-      <div className="space-y-3 animate-fade-in">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={{
+          visible: { transition: { staggerChildren: 0.1 } }
+        }}
+        className="space-y-3"
+      >
         {repos.map((repo) => (
-          <a
+          <motion.a
             key={repo.id}
             href={repo.html_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="block p-4 bg-purple-50 dark:bg-purple-950/20 rounded-lg border border-purple-200 dark:border-purple-800 hover:border-purple-400 dark:hover:border-purple-600 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-200 group"
+            variants={{
+              hidden: { y: 20, opacity: 0 },
+              visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } }
+            }}
+            whileHover={{ x: 5, backgroundColor: 'rgba(168, 85, 247, 0.05)' }}
+            className="block p-4 bg-purple-50 dark:bg-purple-950/20 rounded-lg border border-purple-200 dark:border-purple-800 hover:border-purple-400 dark:hover:border-purple-600 transition-all duration-200 group"
           >
             <div className="flex justify-between items-start gap-4">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-2">
-                  <h4 className="text-base font-semibold text-purple-900 dark:text-purple-50 group-hover:text-purple-700 dark:group-hover:text-purple-100 transition-colors">
+                  <h4 className="text-sm font-semibold text-purple-900 dark:text-purple-50 group-hover:text-purple-700 dark:group-hover:text-purple-100 transition-colors truncate">
                     {repo.name}
                   </h4>
                   {repo.private && (
@@ -117,14 +129,14 @@ const GitHubReposAndActivity = ({ username, token }) => {
                   )}
                 </div>
 
-                <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-3">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1 mb-2">
                   {repo.description || 'No description provided'}
                 </p>
 
                 <div className="flex flex-wrap gap-4 text-sm text-slate-600 dark:text-slate-400">
                   {repo.language && (
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-purple-500 dark:bg-purple-400" />
+                    <div className="flex items-center gap-1.5 text-[10px]">
+                      <div className="w-1.5 h-1.5 rounded-full bg-purple-500 dark:bg-purple-400" />
                       <span>{repo.language}</span>
                     </div>
                   )}
@@ -147,9 +159,9 @@ const GitHubReposAndActivity = ({ username, token }) => {
                 </div>
               </div>
             </div>
-          </a>
+          </motion.a>
         ))}
-      </div>
+      </motion.div>
     );
   };
 
@@ -173,11 +185,23 @@ const GitHubReposAndActivity = ({ username, token }) => {
     }
 
     return (
-      <div className="space-y-4 animate-fade-in">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={{
+          visible: { transition: { staggerChildren: 0.12 } }
+        }}
+        className="space-y-4"
+      >
         {activity.map((event, index) => (
-          <div
+          <motion.div
             key={`${event.id}-${index}`}
-            className="p-4 bg-purple-50 dark:bg-purple-950/20 rounded-lg border border-purple-200 dark:border-purple-800 hover:border-purple-400 dark:hover:border-purple-600 hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-200"
+            variants={{
+              hidden: { x: -20, opacity: 0 },
+              visible: { x: 0, opacity: 1, transition: { duration: 0.5 } }
+            }}
+            whileHover={{ scale: 1.01, backgroundColor: 'rgba(168, 85, 247, 0.03)' }}
+            className="p-4 bg-purple-50 dark:bg-purple-950/20 rounded-lg border border-purple-200 dark:border-purple-800 hover:border-purple-400 dark:hover:border-purple-600 transition-all duration-200"
           >
             <div className="flex items-start gap-3">
               <div className="flex-shrink-0 w-10 h-10 bg-purple-200 dark:bg-purple-900/50 rounded-lg flex items-center justify-center mt-1">
@@ -211,11 +235,12 @@ const GitHubReposAndActivity = ({ username, token }) => {
                 {event.payload.commits && event.payload.commits.length > 0 && (
                   <div className="space-y-2 mt-3">
                     {event.payload.commits.slice(0, 2).map((commit, idx) => (
-                      <a
+                      <motion.a
                         key={idx}
                         href={`https://github.com/${event.repo.name}/commit/${commit.sha}`}
                         target="_blank"
                         rel="noopener noreferrer"
+                        whileHover={{ x: 3 }}
                         className="block p-2 bg-purple-100 dark:bg-purple-900/50 rounded text-sm hover:bg-purple-200 dark:hover:bg-purple-800 transition-colors group"
                       >
                         <div className="flex items-start gap-2">
@@ -229,7 +254,7 @@ const GitHubReposAndActivity = ({ username, token }) => {
                             </p>
                           </div>
                         </div>
-                      </a>
+                      </motion.a>
                     ))}
 
                     {event.payload.commits.length > 2 && (
@@ -241,56 +266,52 @@ const GitHubReposAndActivity = ({ username, token }) => {
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     );
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-50">Projects & Activity</h2>
-          <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">Repositories and recent commits</p>
+    <div className="max-w-6xl mx-auto pt-8">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+
+        {/* Left Side: Projects (Smaller) */}
+        <div className="md:col-span-5 space-y-6">
+          <div className="flex items-center justify-between border-b border-purple-200 dark:border-purple-800 pb-4">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50 flex items-center gap-2">
+              <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+              </svg>
+              Repositories
+            </h2>
+          </div>
+          <div className="min-h-[300px]">
+            {renderRepos()}
+          </div>
         </div>
 
-        <a
-          href={`https://github.com/${username}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 text-white rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-purple-500/30"
-        >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-          </svg>
-          <span className="font-medium">View on GitHub</span>
-        </a>
-      </div>
+        {/* Right Side: Recent Activity (Larger) */}
+        <div className="md:col-span-7 space-y-6">
+          <div className="flex items-center justify-between border-b border-purple-200 dark:border-purple-800 pb-4">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50 flex items-center gap-2">
+              
+              Recent Energy
+            </h2>
+            <a
+              href={`https://github.com/${username}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-semibold text-purple-600 dark:text-purple-400 hover:text-purple-700 underline underline-offset-4"
+            >
+              View on GitHub
+            </a>
+          </div>
+          <div className="min-h-[300px]">
+            {renderActivity()}
+          </div>
+        </div>
 
-      <div className="flex gap-2 border-b border-purple-200 dark:border-purple-800">
-        <button
-          onClick={() => setActiveTab('repos')}
-          className={`px-4 py-3 font-semibold transition-all duration-200 border-b-2 ${activeTab === 'repos'
-              ? 'border-purple-600 dark:border-purple-500 text-purple-900 dark:text-purple-50'
-              : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400'
-            }`}
-        >
-          Repositories
-        </button>
-        <button
-          onClick={() => setActiveTab('activity')}
-          className={`px-4 py-3 font-semibold transition-all duration-200 border-b-2 ${activeTab === 'activity'
-              ? 'border-purple-600 dark:border-purple-500 text-purple-900 dark:text-purple-50'
-              : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-purple-600 dark:hover:text-purple-400'
-            }`}
-        >
-          Recent Activity
-        </button>
-      </div>
-
-      <div className="min-h-[300px]">
-        {activeTab === 'repos' ? renderRepos() : renderActivity()}
       </div>
     </div>
   );

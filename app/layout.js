@@ -1,13 +1,15 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Outfit, Syne } from "next/font/google";
 import "./globals.css";
+import SmoothScroll from "@/components/ui/SmoothScroll";
+import CustomCursor from "@/components/ui/CustomCursor";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
 });
 
@@ -44,9 +46,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${outfit.variable} ${syne.variable} antialiased`}
       >
-        {children}
+        <SmoothScroll>
+          <CustomCursor />
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );

@@ -6,25 +6,25 @@ import emailjs from 'emailjs-com';
 
 const GetInTouch = () => {
     const [history, setHistory] = useState([
-        { type: "system", content: "Sistem terminal siap. Memulai koneksi..." },
-        { type: "system", content: 'Ketik pesan Anda atau ikuti instruksi di bawah.' },
+        { type: "system", content: "Terminal system ready. Initializing connection..." },
+        { type: "system", content: 'Type your message or follow the instructions below.' },
     ]);
 
     const [input, setInput] = useState("");
-    const [step, setStep] = useState(0); 
+    const [step, setStep] = useState(0);
     const [formData, setFormData] = useState({ name: "", email: "", message: "" });
     const [isSending, setIsSending] = useState(false);
     const scrollRef = useRef(null);
     const inputRef = useRef(null);
 
-   
+
     const EMAILJS_CONFIG = {
         SERVICE_ID: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
         TEMPLATE_ID: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
         USER_ID: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
     };
 
- 
+
     useEffect(() => {
         if (EMAILJS_CONFIG.USER_ID) {
             emailjs.init(EMAILJS_CONFIG.USER_ID);
@@ -50,33 +50,33 @@ const GetInTouch = () => {
         setInput("");
 
         if (val.toLowerCase() === "clear") {
-            setHistory([{ type: "system", content: "Terminal dibersihkan." }]);
+            setHistory([{ type: "system", content: "Terminal cleared." }]);
             setStep(0);
             return;
         }
 
         if (val.toLowerCase() === "help") {
-            addToHistory({ type: "system", content: "Perintah: clear (bersihkan), help (bantuan)." });
+            addToHistory({ type: "system", content: "Commands: clear, help." });
             return;
         }
 
         // Form Flow
         if (step === 0) {
             setFormData(prev => ({ ...prev, name: val }));
-            addToHistory({ type: "system", content: `Halo ${val}! Silakan masukkan alamat email Anda:` });
+            addToHistory({ type: "system", content: `Hello ${val}! Please enter your email address:` });
             setStep(1);
         } else if (step === 1) {
             if (!val.includes("@") || !val.includes(".")) {
-                addToHistory({ type: "error", content: "Format email tidak valid. Silakan coba lagi." });
+                addToHistory({ type: "error", content: "Invalid email format. Please try again." });
             } else {
                 setFormData(prev => ({ ...prev, email: val }));
-                addToHistory({ type: "system", content: "Email diterima. Apa pesan yang ingin Anda sampaikan?" });
+                addToHistory({ type: "system", content: "Email received. What message would you like to send?" });
                 setStep(2);
             }
         } else if (step === 2) {
             const currentMessage = val;
             setFormData(prev => ({ ...prev, message: currentMessage }));
-            addToHistory({ type: "system", content: "Sedang mengirim pesan..." });
+            addToHistory({ type: "system", content: "Sending message..." });
             setIsSending(true);
             setStep(3);
 
@@ -105,8 +105,8 @@ const GetInTouch = () => {
                 );
 
                 console.log("EmailJS Success:", result.text);
-                addToHistory({ type: "success", content: "Pesan berhasil dikirim ke irawandevies@gmail.com!" });
-                addToHistory({ type: "system", content: "Terima kasih telah menghubungi saya. Ketik 'clear' untuk kirim pesan baru." });
+                addToHistory({ type: "success", content: "Message sent successfully to irawandevies@gmail.com!" });
+                addToHistory({ type: "system", content: "Thank you for reaching out. Type 'clear' to send a new message." });
                 setStep(4);
             } catch (error) {
 
@@ -115,7 +115,7 @@ const GetInTouch = () => {
                 let errorDetail = "Kesalahan tidak diketahui";
                 if (error && typeof error === 'object') {
                     try {
-                    
+
                         errorDetail = error.text || error.message || JSON.stringify(error);
                         if (errorDetail === "{}") errorDetail = "Blocked or Empty Response (Check Ad-blocker)";
                     } catch (e) {
@@ -133,10 +133,10 @@ const GetInTouch = () => {
     };
 
     const getPrompt = () => {
-        if (step === 0) return "Siapa nama Anda? ";
-        if (step === 1) return "Email Anda: ";
-        if (step === 2) return "Pesan Anda: ";
-        if (step === 4) return "Selesai. ";
+        if (step === 0) return "Your name? ";
+        if (step === 1) return "Your email: ";
+        if (step === 2) return "Your message: ";
+        if (step === 4) return "Done. ";
         return "➜ ";
     };
 

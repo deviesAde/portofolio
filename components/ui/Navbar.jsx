@@ -18,12 +18,12 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: "About Me", href: "#about-me" },
+    { label: "Home", href: "#" },
+    { label: "About", href: "#about-me" },
     { label: "Timeline", href: "#timeline" },
     { label: "Certificates", href: "#certificates" },
     { label: "Projects", href: "#projects" },
     { label: "Tech Stack", href: "#tech-stack" },
-    { label: "Contact", href: "#contact" },
   ];
 
   const handleLinkClick = () => {
@@ -32,9 +32,9 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-          ? "bg-white/70 dark:bg-black/70 backdrop-blur-md border-b border-purple-500/20 py-2 shadow-[0_4px_30px_rgba(139,92,246,0.1)]"
-          : "bg-transparent py-4"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
+        ? "bg-background/80 dark:bg-[#030014]/90 backdrop-blur-xl border-b border-accent/20 py-2 shadow-[0_8px_32px_rgba(3,0,20,0.4)]"
+        : "bg-transparent py-4"
         }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,7 +85,6 @@ export default function Navbar() {
               </Link>
             ))}
 
-            {/* CTA Highlight / Contact Glow */}
             <div className="ml-4 pl-4 border-l border-purple-500/20">
               <Link
                 href="#contact"

@@ -36,7 +36,7 @@ const data = [
               height={500}
               className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-md"
             />
-            
+
           </div>
           <div>
             <Image
@@ -46,7 +46,7 @@ const data = [
               height={500}
               className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-md"
             />
-          
+
           </div>
           <div>
             <Image
@@ -56,7 +56,7 @@ const data = [
               height={500}
               className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-md"
             />
-           
+
           </div>
           <div>
             <Image
@@ -66,53 +66,53 @@ const data = [
               height={500}
               className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-md"
             />
-           
+
           </div>
         </div>
       </div>
     ),
   },
   {
-  title: "Early 2024",
-  content: (
-    <div>
-      <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-4">
-        Bergabung sebagai <strong>Programmer Staf</strong> di <strong>UKM Linux and Open Source (LAOS)</strong> dan sebagai <strong>Research Assistant</strong> di <strong>Software Engineering Laboratory</strong>, Universitas Jember. Dua peran ini menjadi fondasi penting dalam perjalanan saya sebagai junior developer.
-      </p>
-      <ul className="list-disc list-inside text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-6">
-        <li>Mengembangkan proyek berbasis <strong>PHP, Laravel, dan React</strong> dalam tim open source</li>
-        <li>Melatih kemampuan komunikasi dan <strong>public speaking</strong> dalam berbagai agenda organisasi</li>
-        <li>Berpartisipasi dalam <strong>pengembangan inovasi digital</strong> dan kompetisi teknologi</li>
-      </ul>
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <Image
-            src="/images/2024/devieslaos.png"
-            alt="UKM Linux and Open Source"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-md"
-          />
-          <p className="text-xs text-neutral-600 dark:text-neutral-300 mt-2">
-            Aktif sebagai programmer staf di UKM LAOS, mengembangkan berbagai proyek open source.
-          </p>
-        </div>
-        <div>
-          <Image
-            src="/images/2024/rpl.png"
-            alt="Software Engineering Laboratory"
-            width={500}
-            height={500}
-            className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-md"
-          />
-          <p className="text-xs text-neutral-600 dark:text-neutral-300 mt-2">
-            Aktif sebagai Research Assistant di Software Engineering Laboratory.
-          </p>
+    title: "Early 2024",
+    content: (
+      <div>
+        <p className="text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-4">
+          Joined as a <strong>Programmer Staff</strong> at <strong>UKM Linux and Open Source (LAOS)</strong> and as a <strong>Research Assistant</strong> at <strong>Software Engineering Laboratory</strong>, University of Jember. These two roles were important foundations in my journey as a junior developer.
+        </p>
+        <ul className="list-disc list-inside text-neutral-800 dark:text-neutral-200 text-xs md:text-sm font-normal mb-6">
+          <li>Developed projects based on <strong>PHP, Laravel, and React</strong> in an open source team</li>
+          <li>Practiced communication and <strong>public speaking</strong> skills in various organizational agendas</li>
+          <li>Participated in <strong>digital innovation development</strong> and technology competitions</li>
+        </ul>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Image
+              src="/images/2024/devieslaos.png"
+              alt="UKM Linux and Open Source"
+              width={500}
+              height={500}
+              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-md"
+            />
+            <p className="text-xs text-neutral-600 dark:text-neutral-300 mt-2">
+              Active as programmer staff at UKM LAOS, developing various open source projects.
+            </p>
+          </div>
+          <div>
+            <Image
+              src="/images/2024/rpl.png"
+              alt="Software Engineering Laboratory"
+              width={500}
+              height={500}
+              className="rounded-lg object-cover h-20 md:h-44 lg:h-60 w-full shadow-md"
+            />
+            <p className="text-xs text-neutral-600 dark:text-neutral-300 mt-2">
+              Active as Research Assistant at Software Engineering Laboratory.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  ),
-},
+    ),
+  },
   {
     title: "Pengalaman Proyek",
     content: (
@@ -218,8 +218,8 @@ const data = [
 
 export default function TimelineSection() {
   return (
-    
-      <Timeline data={data} />
-    
+
+    <Timeline data={data} />
+
   );
 }

@@ -39,35 +39,32 @@ const MorphingDownloadButton = () => {
   };
 
   return (
-    <div className="flex justify-center items-center p-8">
+    <div className="flex justify-center items-center">
       <motion.button
         ref={buttonRef}
-        className="relative overflow-hidden px-8 py-4 rounded-full font-medium text-white focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
+        className="relative overflow-hidden h-14 bg-accent/10 backdrop-blur-md px-8 rounded-full font-bold uppercase tracking-widest text-xs sm:text-sm text-foreground border border-accent/40 hover:border-accent shadow-[0_8px_32px_rgba(3,0,20,0.5)] hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] transition-all duration-500 focus:outline-none"
         initial="initial"
         animate={controls}
         variants={{
           initial: {
-            background:
-              "linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)",
+            background: "rgba(168, 85, 247, 0.1)",
             scale: 1,
           },
           downloading: {
-            background: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
+            background: "#a855f7",
             scale: 0.95,
-            borderRadius: "8px",
             transition: { duration: 0.3 },
           },
           complete: {
-            background: "linear-gradient(135deg, #10b981 0%, #3b82f6 100%)",
+            background: "#10b981",
             scale: 1,
-            borderRadius: "24px",
+            borderRadius: "9999px",
           },
         }}
         whileHover={{
-          scale: 1.05,
-          boxShadow: "0 10px 25px -5px rgba(99, 102, 241, 0.4)",
+          scale: 1.02,
         }}
-        whileTap={{ scale: 0.95 }}
+        whileTap={{ scale: 0.98 }}
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
         onClick={handleDownload}
