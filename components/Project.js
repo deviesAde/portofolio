@@ -74,13 +74,13 @@ const ProjectsSection = () => {
   const sectionRef = useRef(null)
 
   useEffect(() => {
- 
+
     const timer = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 500);
 
     const ctx = gsap.context(() => {
-      
+
       gsap.fromTo(".project-header-reveal",
         { y: 60, opacity: 0 },
         {
@@ -157,7 +157,7 @@ const ProjectsSection = () => {
           </div>
           <div className="md:w-1/3 pb-2">
             <p className="text-muted-foreground leading-relaxed text-sm md:text-base border-l border-accent/20 pl-6 italic">
-              "Talk is cheap. Show me the code." – Linus Torvalds
+              &quot;Talk is cheap. Show me the code.&quot; – Linus Torvalds
             </p>
           </div>
         </div>
@@ -168,13 +168,16 @@ const ProjectsSection = () => {
             <div
               key={project.id}
               className={`project-card-trigger transition-all duration-700`}
-              style={{ paddingTop: index % 2 === 1 ? '40px' : '0px' }} // Subtle asymmetry
+              // Only apply asymmetry on medium screens and up
+              style={{ paddingTop: (index % 2 === 1) ? 'clamp(0px, 4vw, 40px)' : '0px' }}
             >
               <Magnetic>
-                <ProjectFolder
-                  project={project}
-                  onOpen={() => setSelectedProject(project)}
-                />
+                <div className="md:contents block">
+                  <ProjectFolder
+                    project={project}
+                    onOpen={() => setSelectedProject(project)}
+                  />
+                </div>
               </Magnetic>
             </div>
           ))}

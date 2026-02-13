@@ -232,7 +232,7 @@ const GetInTouch = () => {
             </motion.div>
 
             <p className="mt-4 text-center text-[10px] text-gray-500 font-mono tracking-widest uppercase opacity-50">
-                Type 'clear' to restart or 'help' for commands
+                Type &apos;clear&apos; to restart or &apos;help&apos; for commands
             </p>
         </div>
     );

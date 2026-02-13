@@ -22,9 +22,14 @@ export default function ProjectFolder({ project, onOpen }) {
             className="text-muted-foreground group-hover:text-accent transition-colors duration-500"
           />
         </div>
-        <span className="text-[10px] font-mono text-muted-foreground/40 group-hover:text-accent/40 uppercase tracking-widest">
-          Ref. {project.id.toString().padStart(3, '0')}
-        </span>
+        <div className="flex flex-col items-end">
+          <span className="text-[10px] font-mono text-muted-foreground/40 group-hover:text-accent/40 uppercase tracking-widest">
+            Ref. {project.id.toString().padStart(3, '0')}
+          </span>
+          <span className="text-[8px] font-bold text-accent mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 uppercase tracking-tighter">
+            Click for open
+          </span>
+        </div>
       </div>
 
       {/* Middle/Bottom Content */}

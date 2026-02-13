@@ -9,6 +9,7 @@ import TechStack from "@/components/ui/techstack";
 import MorphingDownloadButton from "@/components/ui/dowload-button";
 import GitHubAllInOne from '@/components/GitHubAllInOne';
 import GetInTouch from "@/components/getintouch";
+import MiniGames from "@/components/MiniGames";
 
 export default function Home() {
   return (
@@ -60,6 +61,10 @@ export default function Home() {
               Get In Touch
             </span></h2>
             <GetInTouch />
+          </section>
+
+          <section id="mini-games">
+            <MiniGames />
           </section>
         </MultilingualLoader>
       </div>

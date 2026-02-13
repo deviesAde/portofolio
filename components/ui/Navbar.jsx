@@ -24,6 +24,7 @@ export default function Navbar() {
     { label: "Certificates", href: "#certificates" },
     { label: "Projects", href: "#projects" },
     { label: "Tech Stack", href: "#tech-stack" },
+    { label: "Games", href: "#mini-games" },
   ];
 
   const handleLinkClick = () => {
